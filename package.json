@@ -1,0 +1,12 @@
+{
+  "name": "smart-expense-manager",
+  "version": "1.0.0",
+  "description": "An app that manages your expenses smartly and much more.",
+  "license": "ISC",
+  "author": "Ankit Gupta",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
