@@ -2,12 +2,9 @@ import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
-import dotenv from "dotenv";
 
 import apiRoutes from "./routes/index.js";
-
-// Initialising .env
-dotenv.config();
+import appConfig from "./config/index.js";
 
 // Initialising express
 const app = express();
@@ -19,7 +16,7 @@ app.use(cors());
 app.use(helmet());
 
 // Initialising logs
-process.env.NODE_ENV === "development" ? app.use(morgan("dev")) : app.use(morgan("combined"));
+appConfig.node_env === "development" ? app.use(morgan("dev")) : app.use(morgan("combined"));
 
 // Mounting routes
 app.use("/api", apiRoutes());
