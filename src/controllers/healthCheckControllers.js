@@ -2,4 +2,4 @@ const getStatus = (req, res) => {
     return res.status(200).json({ status: "ok", timestamp: new Date().toISOString() });
 }
 
-export { getStatus };
+export default { getStatus };

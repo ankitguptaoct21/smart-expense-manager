@@ -4,15 +4,17 @@ import Joi from "joi";
 // Loading .env
 dotenv.config();
 
+// Preparing JOI schema
 const joiEnvSchema = Joi.object({
     PORT: Joi.number().integer().min(1).max(9999).required(),
     NODE_ENV: Joi.string().valid("development", "production", "test", "staging").required(),
     MONGO_URI: Joi.string().uri().required(),
     JWT_SECRET: Joi.string().min(10).required(),
-    JWT_EXPIRES_IN: Joi.string().default("7d").required(),
+    JWT_EXPIRES_IN: Joi.string().required(),
     BCRYPT_SALT_ROUNDS: Joi.number().integer().min(1).max(20).required()
 }).unknown(true);
 
+// Validating environment variables
 const { error, value: validatedEnv } = joiEnvSchema.validate(process.env, { abortEarly: false });
 
 if (error) {
@@ -31,7 +33,7 @@ const appConfig = {
         expires_in: validatedEnv.JWT_EXPIRES_IN
     },
     bcrypt_salt_round: validatedEnv.BCRYPT_SALT_ROUNDS,
-    // _raw: validatedEnv
+    // _raw: validatedEnv // Default environment variables
 }
 
 export default Object.freeze(appConfig);

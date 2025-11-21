@@ -3,7 +3,7 @@ import appConfig from "./index.js";
 
 const dbConnectionUrl = appConfig.db.url;
 
-// recommended for safety
+// Recommended for safety
 mongoose.set("strictQuery", true);
 mongoose.set("strict", true);
 mongoose.set("runValidators", true);
@@ -31,7 +31,7 @@ const connectToDb = async () => {
 
 // Graceful shutdown
 mongoose.connection.on("disconnected", () => {
-    console.warn("MongoDB disconnected");
+    console.warn("MongoDB disconnected...");
 });
 
 mongoose.connection.on("error", err => {
@@ -41,7 +41,7 @@ mongoose.connection.on("error", err => {
 // Close DB cleanly when app stops
 const disconnectToDb = async () => {
     await mongoose.connection.close();
-    console.log("MongoDB connection closed");
+    console.log("MongoDB connection closed...");
 };
 
 export default { connectToDb, disconnectToDb }

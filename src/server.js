@@ -3,7 +3,7 @@ import appConfig from "./config/index.js";
 import db from "./config/db.js";
 
 (async () => {
-    // Connecting to MongoDB
+    // Connecting to Database - MongoDB
     await db.connectToDb();
 
     // Starting the server

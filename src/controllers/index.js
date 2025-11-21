@@ -1,3 +1,3 @@
-import * as healthCheckControllers from "./healthCheckControllers.js";
+import healthCheckControllers from "./healthCheckControllers.js";
 
 export { healthCheckControllers };
