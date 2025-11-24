@@ -45,4 +45,22 @@ const authenticateUser = async (email, password) => {
     }
 }
 
-export default { createUser, authenticateUser };
+const changePassword = async (email, newPassword) => {
+    try {
+        const user = await _findUserByEmail(email);
+        
+        if (!user) {
+            throw new Error(`User with email ${email} doesn't exist.`);
+        }
+
+        user.password = newPassword;
+        await user.save();
+
+        return await _findUserByEmail(email).toJSON();
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export default { createUser, authenticateUser, changePassword };

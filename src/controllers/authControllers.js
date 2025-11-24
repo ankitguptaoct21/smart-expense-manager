@@ -46,8 +46,10 @@ const signin = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
+        // Authenticate user
         const user = await UserRepo.authenticateUser(email, password);
 
+        // Sign user token
         const token = _signToken(user);
 
         return res.status(200).json({ user, token });
@@ -57,4 +59,20 @@ const signin = async (req, res, next) => {
     }
 }
 
-export default { signup, signin };
+const changePassword = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+
+        // Changes user password
+        const user = await UserRepo.changePassword(email, password);
+
+        // Sign user token
+        const token = _signToken(user);
+
+        return res.status(200).json({ user, token })
+    } catch (error) {
+        return next(error);
+    }
+}
+
+export default { signup, signin, changePassword };

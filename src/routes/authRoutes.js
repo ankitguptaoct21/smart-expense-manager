@@ -6,6 +6,7 @@ const authRoutes = () => {
 
     authRoutes.post("/signup", authControllers.signup);
     authRoutes.post("/signin", authControllers.signin);
+    authRoutes.post("/change-password", authControllers.changePassword);
 
     return authRoutes;
 }
