@@ -1,6 +1,11 @@
 import { User } from "../models/index.js";
 
-const createUser = async (user) => {
+const _findUserByEmail = async email => await User
+        .findOne({ email })
+        .select("+password")
+        .exec();
+
+const createUser = async user => {
     try {
         const newUser =  await User.create({
             name: user.name,
@@ -39,10 +44,5 @@ const authenticateUser = async (email, password) => {
         console.log(error);
     }
 }
-
-const _findUserByEmail = async email => await User
-        .findOne({ email })
-        .select("+password")
-        .exec();
 
 export default { createUser, authenticateUser };
