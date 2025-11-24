@@ -43,7 +43,18 @@ const signup = async (req, res, next) => {
 }
 
 const signin = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
 
+        const user = await UserRepo.authenticateUser(email, password);
+
+        const token = _signToken(user);
+
+        return res.status(200).json({ user, token });
+
+    } catch (error) {
+        return next(error);
+    }
 }
 
 export default { signup, signin };

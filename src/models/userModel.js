@@ -39,8 +39,7 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-},
-{
+}, {
     timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
@@ -49,18 +48,18 @@ const userSchema = new Schema({
 userSchema.index({ email: 1 }, { unique: true, background: true });
 
 userSchema.pre('save', async function (next) {
-  // Only run when password is set/modified
-  if (!this.isModified('password')) {
-    return next();
-  }
+    // Only run when password is set/modified
+    if (!this.isModified('password')) {
+        return next();
+    }
 
-  try {
-    const salt = await bcrypt.genSalt(appConfig.bcrypt_salt_round);
-    this.password = await bcrypt.hash(this.password, salt);
-    return next();
-  } catch (err) {
-    return next(err);
-  }
+    try {
+        const salt = await bcrypt.genSalt(appConfig.bcrypt_salt_round);
+        this.password = await bcrypt.hash(this.password, salt);
+        return next();
+    } catch (err) {
+        return next(err);
+    }
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
@@ -69,6 +68,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
         // if password not selected, throw helpful error
         throw new Error('Password not selected. Use .select("+password") when querying.');
     }
+
     return bcrypt.compare(candidatePassword, this.password);
 };
 
