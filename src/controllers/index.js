@@ -1,4 +1,5 @@
-import healthCheckControllers from "./healthCheckControllers.js";
-import authControllers from "./authControllers.js";
+import healthCheckController from "./healthCheckController.js";
+import authController from "./authController.js";
+import expenseController from "./expenseController.js";
 
-export { healthCheckControllers, authControllers };
+export { healthCheckController, authController, expenseController };

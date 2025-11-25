@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { healthCheckControllers } from "../controllers/index.js"
+
+import { healthCheckController } from "../controllers/index.js"
 
 const healthCheckRoutes = () => {
     const healthCheckRoutes = Router();
 
-    healthCheckRoutes.get("/status", healthCheckControllers.getStatus);
+    healthCheckRoutes.get("/status", healthCheckController.getStatus);
 
     return healthCheckRoutes;
 }

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import appConfig from "./index.js";
 
 const dbConnectionUrl = appConfig.db.url;

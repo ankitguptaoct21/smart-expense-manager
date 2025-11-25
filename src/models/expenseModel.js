@@ -55,13 +55,13 @@ const expenseSchema = new Schema({
 });
 
 // Soft delete method
-expenseSchema.methods.softDelete = async () => {
+expenseSchema.methods.softDelete = async function () {
     this.deletedAt = Date.now();
     return await this.save();
 }
 
 // Remove internal fields in response
-expenseSchema.methods.toJSON = () => {
+expenseSchema.methods.toJSON = function () {
     const obj = this.toObject();
     delete obj.__v;
 

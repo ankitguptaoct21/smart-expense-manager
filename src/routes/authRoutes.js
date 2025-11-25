@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { authControllers } from "../controllers/index.js"
+
+import { authController } from "../controllers/index.js"
 
 const authRoutes = () => {
     const authRoutes = Router();
 
-    authRoutes.post("/signup", authControllers.signup);
-    authRoutes.post("/signin", authControllers.signin);
-    authRoutes.post("/change-password", authControllers.changePassword);
+    authRoutes.post("/signup", authController.signup);
+    authRoutes.post("/signin", authController.signin);
+    authRoutes.post("/change-password", authController.changePassword);
     // Add logout route here
 
     return authRoutes;
