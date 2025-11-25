@@ -37,4 +37,32 @@ const createExpense = async expense => {
     }
 }
 
-export default { getAllExpenses, getExpense, createExpense };
+const updateExpense = async (expenseId, expenseDetails) => {
+    try {
+        const expenseToUpdate = await Expense
+            .findById(expenseId)
+
+        if (!expenseToUpdate) {
+            throw new Error("Expense not found.");
+        }
+
+        const allowedFields = ["title", "subtitle", "amount", "category", "subcategory", "date", "notes"];
+        for (const key of allowedFields) {
+            if (expenseDetails[key] !== undefined) {
+                expenseToUpdate[key] = expenseDetails[key];
+            }
+        }
+
+        if (expenseToUpdate.amount <= 0) {
+            throw new Error("Amount must be greater than 0.")
+        }
+
+        await expenseToUpdate.save();
+
+        return expenseToUpdate.toJSON();
+    } catch (error) {
+        throw new Error(error);
+    } 
+}
+
+export default { getAllExpenses, getExpense, createExpense, updateExpense };

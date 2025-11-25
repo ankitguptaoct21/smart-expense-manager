@@ -8,6 +8,7 @@ const expenseRoutes = () => {
     expenseRoutes.get("/", expenseController.getAllExpenses);
     expenseRoutes.get("/:expenseId", expenseController.getExpense);
     expenseRoutes.post("/", expenseController.createExpense);
+    expenseRoutes.put("/:expenseId", expenseController.updateExpense);
 
     return expenseRoutes;
 }

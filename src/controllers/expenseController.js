@@ -41,4 +41,16 @@ const createExpense = async (req, res, next) => {
     }
 }
 
-export default { getAllExpenses, getExpense, createExpense };
+const updateExpense = async (req, res, next) => {
+    try {
+        const { expenseId } = req.params;
+        const expenseDetails = req.body;
+        const updatedExpense = await ExpenseRepo.updateExpense(expenseId, expenseDetails);
+
+        res.status(200).json(updatedExpense);
+    } catch (error) {
+        return next(error);
+    }
+}
+
+export default { getAllExpenses, getExpense, createExpense, updateExpense };
