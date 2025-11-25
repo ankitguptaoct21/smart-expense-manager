@@ -132,4 +132,3 @@ export const expenseIdSchema = Joi.object({
             "any.required": "Expense ID is required"
         })
 });
-
