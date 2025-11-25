@@ -5,6 +5,7 @@ import cors from "cors";
 
 import apiRoutes from "./routes/index.js";
 import appConfig from "./config/index.js";
+import { errorHandler, notFoundHandler } from "./middlewares/index.js";
 
 // Initialising express
 const app = express();
@@ -20,5 +21,11 @@ appConfig.node_env === "development" ? app.use(morgan("dev")) : app.use(morgan("
 
 // Mounting routes
 app.use("/api", apiRoutes());
+
+// 404 handler (must be after all routes)
+app.use(notFoundHandler);
+
+// Error handler (must be last)
+app.use(errorHandler);
 
 export default app;

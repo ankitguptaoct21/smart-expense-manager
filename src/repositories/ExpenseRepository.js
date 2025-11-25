@@ -1,27 +1,31 @@
 import { Expense } from "../models/index.js";
 
-const getAllExpenses = async () => {
+const getAllExpenses = async (userId) => {
     try {
         const expenses = await Expense
-            .find({ deletedAt: null })
+            .find({ user: userId, deletedAt: null })
             .sort({ date: -1 });
 
         return expenses;
 
     } catch (error) {
-        throw new Error(error);
+        throw error;
     }
 }
 
-const getExpense = async expenseId => {
+const getExpense = async (expenseId, userId) => {
     try {
         const expense = await Expense
-            .findById(expenseId);
+            .findOne({ _id: expenseId, user: userId, deletedAt: null });
+
+        if (!expense) {
+            throw new Error("Expense not found.");
+        }
 
         return expense.toJSON();
 
     } catch (error) {
-        throw new Error(error);
+        throw error;
     }
 }
 
@@ -33,14 +37,14 @@ const createExpense = async expense => {
         return newExpense.toJSON();
 
     } catch (error) {
-        throw new Error(error);
+        throw error;
     }
 }
 
-const updateExpense = async (expenseId, expenseDetails) => {
+const updateExpense = async (expenseId, expenseDetails, userId) => {
     try {
         const expenseToUpdate = await Expense
-            .findById(expenseId)
+            .findOne({ _id: expenseId, user: userId, deletedAt: null });
 
         if (!expenseToUpdate) {
             throw new Error("Expense not found.");
@@ -61,22 +65,22 @@ const updateExpense = async (expenseId, expenseDetails) => {
 
         return expenseToUpdate.toJSON();
     } catch (error) {
-        throw new Error(error);
+        throw error;
     } 
 }
 
-const deleteExpense = async expenseId => {
+const deleteExpense = async (expenseId, userId) => {
     try {
         const expense = await Expense
-            .findById(expenseId);
+            .findOne({ _id: expenseId, user: userId, deletedAt: null });
 
         if (!expense) {
-            throw new Error("Expense doesn't exist.");
+            throw new Error("Expense not found.");
         }
 
         await expense.softDelete();
     } catch (error) {
-        throw new Error(error);
+        throw error;
     }
 }
 

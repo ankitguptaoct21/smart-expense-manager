@@ -2,7 +2,8 @@ import { ExpenseRepo } from "../repositories/index.js";
 
 const getAllExpenses = async (req, res, next) => {
     try {
-        const allExpenses = await ExpenseRepo.getAllExpenses();
+        const userId = req.user.userId;
+        const allExpenses = await ExpenseRepo.getAllExpenses(userId);
 
         res.status(200).json(allExpenses);
     } catch (error) {
@@ -13,17 +14,18 @@ const getAllExpenses = async (req, res, next) => {
 const getExpense = async (req, res, next) => {
     try {
         const { expenseId } = req.params;
-        const expense = await ExpenseRepo.getExpense(expenseId);
+        const userId = req.user.userId;
+        const expense = await ExpenseRepo.getExpense(expenseId, userId);
 
         res.status(200).json(expense);
     } catch (error) {
-        return next (error);
+        return next(error);
     }
 }
 
 const createExpense = async (req, res, next) => {
     try {
-        let userId = "6924699f0a5663bbda30c4b5";
+        const userId = req.user.userId;
         const expense = {
             user: userId,
             title: req.body.title,
@@ -44,8 +46,9 @@ const createExpense = async (req, res, next) => {
 const updateExpense = async (req, res, next) => {
     try {
         const { expenseId } = req.params;
+        const userId = req.user.userId;
         const expenseDetails = req.body;
-        const updatedExpense = await ExpenseRepo.updateExpense(expenseId, expenseDetails);
+        const updatedExpense = await ExpenseRepo.updateExpense(expenseId, expenseDetails, userId);
 
         res.status(200).json(updatedExpense);
     } catch (error) {
@@ -56,7 +59,8 @@ const updateExpense = async (req, res, next) => {
 const deleteExpense = async (req, res, next) => {
     try {
         const { expenseId } = req.params;
-        await ExpenseRepo.deleteExpense(expenseId);
+        const userId = req.user.userId;
+        await ExpenseRepo.deleteExpense(expenseId, userId);
 
         res.status(204).json({});
     } catch (error) {

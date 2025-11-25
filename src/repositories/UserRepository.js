@@ -11,7 +11,7 @@ const createUser = async user => {
         return newUser.toJSON();
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
@@ -36,16 +36,22 @@ const authenticateUser = async (email, password) => {
         return user.toJSON();
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 
-const changePassword = async (email, newPassword) => {
+const changePassword = async (email, oldPassword, newPassword) => {
     try {
         const user = await User.findByEmailWithPassword(email);
         
         if (!user) {
             throw new Error(`User with email ${email} doesn't exist.`);
+        }
+
+        // Verify old password
+        const isPasswordVerified = await user.comparePassword(oldPassword);
+        if (!isPasswordVerified) {
+            throw new Error("Current password is incorrect.");
         }
 
         user.password = newPassword;
@@ -54,7 +60,7 @@ const changePassword = async (email, newPassword) => {
         return user.toJSON();
 
     } catch (error) {
-        console.log(error);
+        throw error;
     }
 }
 

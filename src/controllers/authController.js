@@ -19,10 +19,6 @@ const signup = async (req, res, next) => {
     try {
         const { name, email, password } = req.body;
 
-        if (!name || !email || !password) {
-            return res.status(400).json({ error: 'Name, Email, and Password are required' });
-        }
-
         // Create user (UserRepository will hash password in pre-save)
         const user = await UserRepo.createUser({ name, email, password });
 
@@ -61,10 +57,10 @@ const signin = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const { email, oldPassword, newPassword } = req.body;
 
-        // Changes user password
-        const user = await UserRepo.changePassword(email, password);
+        // Changes user password (validates old password)
+        const user = await UserRepo.changePassword(email, oldPassword, newPassword);
 
         // Sign user token
         const token = _signToken(user);
