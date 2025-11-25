@@ -7,6 +7,7 @@ const authRoutes = () => {
     authRoutes.post("/signup", authControllers.signup);
     authRoutes.post("/signin", authControllers.signin);
     authRoutes.post("/change-password", authControllers.changePassword);
+    // Add logout route here
 
     return authRoutes;
 }
