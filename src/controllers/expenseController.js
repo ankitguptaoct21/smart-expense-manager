@@ -53,4 +53,15 @@ const updateExpense = async (req, res, next) => {
     }
 }
 
-export default { getAllExpenses, getExpense, createExpense, updateExpense };
+const deleteExpense = async (req, res, next) => {
+    try {
+        const { expenseId } = req.params;
+        await ExpenseRepo.deleteExpense(expenseId);
+
+        res.status(204).json({});
+    } catch (error) {
+        return next(error);
+    }
+}
+
+export default { getAllExpenses, getExpense, createExpense, updateExpense, deleteExpense };

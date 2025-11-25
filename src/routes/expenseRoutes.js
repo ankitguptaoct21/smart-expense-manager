@@ -9,6 +9,7 @@ const expenseRoutes = () => {
     expenseRoutes.get("/:expenseId", expenseController.getExpense);
     expenseRoutes.post("/", expenseController.createExpense);
     expenseRoutes.put("/:expenseId", expenseController.updateExpense);
+    expenseRoutes.delete("/:expenseId", expenseController.deleteExpense);
 
     return expenseRoutes;
 }

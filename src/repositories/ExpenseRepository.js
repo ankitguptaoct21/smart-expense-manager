@@ -3,7 +3,7 @@ import { Expense } from "../models/index.js";
 const getAllExpenses = async () => {
     try {
         const expenses = await Expense
-            .find()
+            .find({ deletedAt: null })
             .sort({ date: -1 });
 
         return expenses;
@@ -65,4 +65,19 @@ const updateExpense = async (expenseId, expenseDetails) => {
     } 
 }
 
-export default { getAllExpenses, getExpense, createExpense, updateExpense };
+const deleteExpense = async expenseId => {
+    try {
+        const expense = await Expense
+            .findById(expenseId);
+
+        if (!expense) {
+            throw new Error("Expense doesn't exist.");
+        }
+
+        await expense.softDelete();
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+export default { getAllExpenses, getExpense, createExpense, updateExpense, deleteExpense };
